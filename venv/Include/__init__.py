@@ -1,11 +1,19 @@
-import os
-import xlrd
+import os, sys, xlrd
 
-# Gets the Workbook URL based on the env variable 'XLS_PATH'
-workbook = xlrd.open_workbook(os.getenv('XLS_PATH'))
+workbookdir = ""
+sheetname = ""
+if (sys.argv[1]):
+    workbookdir = sys.argv[1]
+    sheetname = sys.argv[2]
+else :
+    workbookdir = os.getenv('XLS_PATH')
+    sheetname = os.getenv('SHEET_NAME')
+	
+# Gets the Workbook URL based on the env variable 'XLS_PATH' or ARGV
+workbook = xlrd.open_workbook(workbookdir)
 
-# Gets sheet by name in the env variable 'SHEET_NAME'
-sheet = workbook.sheet_by_name(os.getenv('SHEET_NAME'))
+# Gets sheet by name 
+sheet = workbook.sheet_by_name(sheetname)
 
 #Get the sheet number of rows and columns
 num_rows = sheet.nrows
